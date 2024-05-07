@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts 散点图示例</title>
+    <!-- 引入 ECharts 文件 -->
+    <script src="echarts.min.js"></script>
+    <script src="d_data.js"></script>
+</head>
+<body>
+    <!-- 为 ECharts 准备一个容器 -->
+    <div id="scatterChart" style="width: 700px;height:500px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化 echarts 实例
+        var myChart = echarts.init(document.getElementById('scatterChart'));
+
+        //echarts.registerTransform(ecStat.transform.regression);
+
+        // 将 data.js 中的数据转换为 ECharts 所需的格式
+        var scatterData = ddata.map(function(item) {
+            return [item.distance, item.ratio];
+        });
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '散点图示例'
+            },
+            transform: {
+                type: 'ecStat:regression',
+                config: { method: 'polynomial', order: 3 }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                }
+            },
+            legend: {
+                data:['散点数据']
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                name:'distance',
+                nameLocation: 'middle', // 设置x轴名称显示位置
+                nameGap: 20 ,// 设置x轴名称与轴线之间的距离
+                boundaryGap: [0, 0.01]
+            },
+            yAxis: {
+                type: 'value',
+                name:'ratio',
+                nameLocation: 'end', // 设置y轴名称显示位置
+                nameGap: 10 // 设置y轴名称与轴线之间的距离
+            },
+            series: [
+                {
+                    name: '散点数据',
+                    type: 'scatter',
+                    data: scatterData
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>

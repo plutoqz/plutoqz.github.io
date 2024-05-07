@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>3D Scatter Plot with ECharts</title>
+    <!-- 引入 ECharts 主文件 -->
+    <script src="echarts.min.js"></script>
+    <!-- 引入 ECharts GL 模块 -->
+    <script src="echarts-gl.min.js"></script>
+    <!-- 引入包含 Data 变量的 JavaScript 文件 -->
+    <script src="echarts_data.js"></script>
+</head>
+<body style="height: 100%; margin: 0">
+    <div id="main" style="height: 600px"></div>
+    <script type="text/javascript">
+        // 假设 Data 变量已经从 eData.js 中加载
+        var data = alldata;
+
+        var myChart = echarts.init(document.getElementById('main'));
+
+        var option = {
+            tooltip: {
+                show: true
+            },
+            grid3D: {
+                viewControl: {
+                    projection: 'perspective'
+                }
+            },
+            xAxis3D: {
+                type: 'value',
+                name: 'l_s_1'
+            },
+            yAxis3D: {
+                type: 'value',
+                name: 'l_s_2'
+            },
+            zAxis3D: {
+                type: 'value',
+                name: 'ratio'
+            },
+            dataset: {
+                dimensions: ['l_s_1', 'l_s_2', 'ratio'],
+                source: data
+            },
+            series: [
+                {
+                    type: 'scatter3D',
+                    symbolSize: 10, // 可以设置一个固定的大小，或者根据数据动态计算
+                    encode: {
+                        x: 'l_s_1',
+                        y: 'l_s_2',
+                        z: 'ratio'
+                    }
+                }
+            ]
+        };
+
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
