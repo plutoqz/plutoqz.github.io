@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pluto QZ | 学习笔记</title>
+    <meta name="description" content="Pluto QZ 的学习笔记页，按分类浏览仓库中的 Markdown 技术笔记。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="notes.css">
+</head>
+<body>
+    <div class="notes-page">
+        <header class="notes-topbar">
+            <a class="notes-brand" href="index.html">PLUTO QZ / NOTES</a>
+            <nav class="notes-nav">
+                <a href="index.html">Home</a>
+                <a href="https://github.com/plutoqz/plutoqz.github.io/tree/main/notes" target="_blank" rel="noreferrer">Notes Folder</a>
+                <a href="https://github.com/plutoqz/plutoqz.github.io" target="_blank" rel="noreferrer">Repository</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="notes-hero">
+                <div class="notes-hero-copy">
+                    <p class="eyebrow">Markdown Driven Learning Archive</p>
+                    <h1>学习笔记</h1>
+                    <p>
+                        这里展示仓库中 <code>notes/</code> 目录下的 Markdown 笔记。
+                        你可以按分类浏览，也可以直接搜索标题、摘要和标签。
+                    </p>
+                </div>
+                <div class="notes-hero-panel">
+                    <div class="notes-stat">
+                        <span class="eyebrow">Notes</span>
+                        <strong id="total-notes">0</strong>
+                        <p>自动索引的文章总数</p>
+                    </div>
+                    <div class="notes-stat">
+                        <span class="eyebrow">Categories</span>
+                        <strong id="total-categories">0</strong>
+                        <p>按目录聚合出的分类</p>
+                    </div>
+                    <div class="notes-stat">
+                        <span class="eyebrow">Flow</span>
+                        <strong>Push Markdown</strong>
+                        <p>上传 Markdown 后会自动更新索引</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="notes-controls">
+                <label class="search-box" for="notes-search">
+                    <span>搜索笔记</span>
+                    <input id="notes-search" type="search" placeholder="输入标题、关键词或标签">
+                </label>
+                <div class="category-bar" id="category-bar" aria-live="polite"></div>
+            </section>
+
+            <section class="notes-list-section">
+                <div class="notes-list-head">
+                    <div>
+                        <p class="eyebrow">Directory</p>
+                        <h2 id="notes-result-title">全部笔记</h2>
+                    </div>
+                    <p id="notes-result-meta">准备读取笔记清单...</p>
+                </div>
+                <div class="notes-grid" id="notes-grid" aria-live="polite"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="notes-common.js"></script>
+    <script src="notes.js"></script>
+</body>
+</html>

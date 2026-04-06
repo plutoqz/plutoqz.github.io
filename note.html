@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pluto QZ | Note</title>
+    <meta name="description" content="Pluto QZ 的单篇学习笔记页。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="notes.css">
+</head>
+<body class="note-view-page">
+    <div class="notes-page">
+        <header class="notes-topbar">
+            <a class="notes-brand" href="index.html">PLUTO QZ / NOTE VIEW</a>
+            <nav class="notes-nav">
+                <a href="notes.html">全部笔记</a>
+                <a href="index.html">Home</a>
+                <a href="https://github.com/plutoqz/plutoqz.github.io/tree/main/notes" target="_blank" rel="noreferrer">Notes Folder</a>
+            </nav>
+        </header>
+
+        <main class="note-layout">
+            <section class="note-article-shell">
+                <div class="note-meta-band">
+                    <p class="eyebrow" id="note-category">Loading</p>
+                    <h1 id="note-title">正在加载笔记...</h1>
+                    <p id="note-summary">请稍等，正在读取 Markdown 内容。</p>
+                    <div class="note-meta" id="note-meta"></div>
+                </div>
+                <article class="markdown-body" id="note-article" aria-live="polite"></article>
+            </section>
+
+            <aside class="note-sidebar">
+                <section class="sidebar-card">
+                    <p class="eyebrow">Article TOC</p>
+                    <h2>目录</h2>
+                    <div class="toc-list" id="toc-list"></div>
+                </section>
+                <section class="sidebar-card">
+                    <p class="eyebrow">Navigation</p>
+                    <h2>继续阅读</h2>
+                    <div class="related-list" id="related-list"></div>
+                </section>
+            </aside>
+        </main>
+    </div>
+
+    <script src="assets/lib/marked.min.js"></script>
+    <script src="notes-common.js"></script>
+    <script src="note-view.js"></script>
+</body>
+</html>

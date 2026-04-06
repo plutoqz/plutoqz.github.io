@@ -1,0 +1,64 @@
+{
+  "generatedAt": "2026-04-06T15:10:06.182Z",
+  "notes": [
+    {
+      "path": "notes/engineering/building-a-github-pages-notebook.md",
+      "url": "note.html?path=notes%2Fengineering%2Fbuilding-a-github-pages-notebook.md",
+      "slug": "building-a-github-pages-notebook",
+      "category": "engineering",
+      "categoryLabel": "Engineering",
+      "title": "把 GitHub Pages 变成可持续更新的学习笔记站",
+      "summary": "从静态主页出发，为 GitHub Pages 加上一层 Markdown 笔记系统，让个人站点同时具备项目入口与长期知识沉淀能力。",
+      "date": "2026-04-03",
+      "tags": [
+        "GitHub Pages",
+        "Markdown",
+        "Notes",
+        "Automation"
+      ]
+    },
+    {
+      "path": "notes/webgis/thinking-in-layers-and-projections.md",
+      "url": "note.html?path=notes%2Fwebgis%2Fthinking-in-layers-and-projections.md",
+      "slug": "thinking-in-layers-and-projections",
+      "category": "webgis",
+      "categoryLabel": "WebGIS",
+      "title": "从图层和投影开始理解 WebGIS 页面",
+      "summary": "做 WebGIS 页面时，真正决定复杂度的往往不是地图组件本身，而是图层组织、坐标系统与交互状态的管理方式。",
+      "date": "2026-04-02",
+      "tags": [
+        "WebGIS",
+        "GIS",
+        "Map",
+        "Frontend"
+      ]
+    },
+    {
+      "path": "notes/engineering/structuring-a-project-portal.md",
+      "url": "note.html?path=notes%2Fengineering%2Fstructuring-a-project-portal.md",
+      "slug": "structuring-a-project-portal",
+      "category": "engineering",
+      "categoryLabel": "Engineering",
+      "title": "怎样把个人项目主页做成长期有用的入口",
+      "summary": "个人主页真正有价值的，不是第一页看起来多炫，而是它能不能长期承接项目、笔记和身份表达，并且越积越清晰。",
+      "date": "2026-03-30",
+      "tags": [
+        "Personal Site",
+        "Frontend Design",
+        "Information Architecture"
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "key": "engineering",
+      "label": "Engineering",
+      "count": 2
+    },
+    {
+      "key": "webgis",
+      "label": "WebGIS",
+      "count": 1
+    }
+  ]
+}
