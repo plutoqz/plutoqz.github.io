@@ -23,12 +23,12 @@ async function loadNotesPage() {
     } catch (error) {
         notesGrid.innerHTML = `
             <article class="note-card note-card-empty">
-                <p class="eyebrow">Unavailable</p>
-                <h3>笔记清单读取失败</h3>
+                <p class="eyebrow">暂时不可用</p>
+                <h3>文章目录读取失败</h3>
                 <p>${window.notesUtils.escapeHtml(error.message)}</p>
             </article>
         `;
-        resultMeta.textContent = "无法读取 notes-manifest.json";
+        resultMeta.textContent = "无法读取 notes-manifest.json。";
     }
 }
 
@@ -78,18 +78,18 @@ function renderNotes() {
     });
 
     resultTitle.textContent = activeCategory === "all"
-        ? "全部笔记"
-        : `${findCategoryLabel(activeCategory)} 分类`;
-    resultMeta.textContent = `共 ${notes.length} 篇结果`;
+        ? "全部文章"
+        : `${findCategoryLabel(activeCategory)}专题`;
+    resultMeta.textContent = `共找到 ${notes.length} 篇文章`;
 
     if (notes.length === 0) {
         notesGrid.innerHTML = `
-                <article class="note-card note-card-empty">
-                    <p class="eyebrow">No Result</p>
-                    <h3>没有匹配的笔记</h3>
-                    <p>试试切换分类，或者换一个关键词。</p>
-                </article>
-            `;
+            <article class="note-card note-card-empty">
+                <p class="eyebrow">没有结果</p>
+                <h3>没有匹配的文章</h3>
+                <p>可以换一个关键词，或者切换到其他专题继续浏览。</p>
+            </article>
+        `;
         return;
     }
 
@@ -110,7 +110,7 @@ function renderNotes() {
                     <div class="note-meta">
                         ${(note.tags || []).map((tag) => `<span>${window.notesUtils.escapeHtml(tag)}</span>`).join("")}
                     </div>
-                    <a class="note-link" href="${note.url}">阅读笔记</a>
+                    <a class="note-link" href="${note.url}">阅读文章</a>
                 </article>
             `
         )

@@ -19,7 +19,7 @@ async function loadNote() {
     try {
         const { manifest, note, parsed } = await window.notesUtils.loadNoteDocument(notePath);
 
-        document.title = `${note.title} | Pluto QZ Notes`;
+        document.title = `${note.title} | Pluto QZ 技术博客`;
         categoryElement.textContent = note.categoryLabel;
         titleElement.textContent = note.title;
         summaryElement.textContent = note.summary;
@@ -46,7 +46,7 @@ function buildToc() {
 
     const usedIds = new Set();
     const items = headings.map((heading) => {
-        let baseId = window.notesUtils.slugify(heading.textContent) || "section";
+        const baseId = window.notesUtils.slugify(heading.textContent) || "section";
         let uniqueId = baseId;
         let counter = 1;
 
@@ -77,7 +77,7 @@ function renderRelated(notes, current) {
     if (related.length === 0) {
         relatedList.innerHTML = `
             <a class="related-link" href="${window.notesUtils.appendSourceParam(`notes.html?category=${encodeURIComponent(current.category)}`)}">
-                返回 ${window.notesUtils.escapeHtml(current.categoryLabel)} 分类
+                返回“${window.notesUtils.escapeHtml(current.categoryLabel)}”专题
             </a>
         `;
         return;
@@ -96,13 +96,13 @@ function renderRelated(notes, current) {
 }
 
 function renderMissing(message) {
-    document.title = "Note Unavailable | Pluto QZ";
-    categoryElement.textContent = "Unavailable";
-    titleElement.textContent = "笔记暂时不可用";
+    document.title = "文章暂时不可用 | Pluto QZ";
+    categoryElement.textContent = "暂时不可用";
+    titleElement.textContent = "文章暂时无法打开";
     summaryElement.textContent = message;
     articleElement.innerHTML = `
-        <p>请返回 <a href="${window.notesUtils.appendSourceParam("notes.html")}">学习笔记页</a> 重新选择文章，或者检查 Markdown 文件是否已经推送到仓库。</p>
+        <p>请返回 <a href="${window.notesUtils.appendSourceParam("notes.html")}">文章目录页</a> 重新选择文章，或者检查对应 Markdown 文件是否已经推送到仓库。</p>
     `;
     tocList.innerHTML = "<p>暂无目录。</p>";
-    relatedList.innerHTML = `<a class="related-link" href="${window.notesUtils.appendSourceParam("notes.html")}">返回全部笔记</a>`;
+    relatedList.innerHTML = `<a class="related-link" href="${window.notesUtils.appendSourceParam("notes.html")}">返回全部文章</a>`;
 }

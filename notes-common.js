@@ -5,6 +5,25 @@ const NOTES_REPO = {
     notesRoot: "notes/"
 };
 
+const LOCALIZED_LABELS = {
+    engineering: "工程实践",
+    webgis: "地图与空间数据",
+    general: "未分类",
+    frontend: "前端",
+    backend: "后端",
+    "geo data": "空间数据",
+    notes: "笔记系统",
+    automation: "自动化",
+    "personal site": "个人站点",
+    "frontend design": "前端设计",
+    "information architecture": "信息架构",
+    map: "地图",
+    utility: "工具",
+    desktop: "桌面应用",
+    "notes folder": "笔记源码目录",
+    repository: "站点仓库"
+};
+
 const sourceParams = new URLSearchParams(window.location.search);
 const forcedSource = sourceParams.get("source");
 
@@ -56,7 +75,7 @@ window.notesUtils = {
             }
         }
 
-        throw lastError ?? new Error("No notes source available.");
+        throw lastError ?? new Error("当前没有可用的笔记数据源。");
     },
 
     getPreferredSource() {
@@ -74,7 +93,7 @@ window.notesUtils = {
     async loadFromManifest() {
         const response = await fetch("notes-manifest.json", { cache: "no-store" });
         if (!response.ok) {
-            throw new Error(`Manifest request failed: ${response.status}`);
+            throw new Error(`读取笔记清单失败：${response.status}`);
         }
 
         const manifest = await response.json();
@@ -134,9 +153,9 @@ window.notesUtils = {
         const headings = this.extractHeadings(parsed.body);
         const title = String(parsed.attributes.title || headings[0]?.text || this.humanize(fileName));
         const summary = String(parsed.attributes.summary || this.extractSummary(parsed.body));
-        const tags = this.normalizeArray(parsed.attributes.tags);
+        const tags = this.normalizeArray(parsed.attributes.tags).map((tag) => this.localizeLabel(tag));
         const date = String(parsed.attributes.date || "");
-        const categoryLabel = String(parsed.attributes.categoryLabel || this.humanize(category));
+        const categoryLabel = String(this.localizeLabel(parsed.attributes.categoryLabel || this.humanize(category)));
 
         return {
             path: entry.path,
@@ -153,12 +172,21 @@ window.notesUtils = {
     },
 
     normalizeManifest(manifest, source) {
-        const notes = Array.isArray(manifest.notes) ? manifest.notes.map((note) => ({
-            ...note,
-            url: this.buildNoteUrl(note.path)
-        })) : [];
+        const notes = Array.isArray(manifest.notes)
+            ? manifest.notes.map((note) => ({
+                ...note,
+                categoryLabel: this.localizeLabel(note.categoryLabel || this.humanize(note.category)),
+                tags: this.normalizeArray(note.tags).map((tag) => this.localizeLabel(tag)),
+                url: this.buildNoteUrl(note.path)
+            }))
+            : [];
 
-        const categories = Array.isArray(manifest.categories) ? manifest.categories : [];
+        const categories = Array.isArray(manifest.categories)
+            ? manifest.categories.map((category) => ({
+                ...category,
+                label: this.localizeLabel(category.label || this.humanize(category.key))
+            }))
+            : [];
 
         return {
             generatedAt: manifest.generatedAt || "",
@@ -189,7 +217,7 @@ window.notesUtils = {
 
         const response = await fetch(notePath, { cache: "no-store" });
         if (!response.ok) {
-            throw new Error(`Note request failed: ${response.status}`);
+            throw new Error(`读取笔记正文失败：${response.status}`);
         }
 
         const raw = await response.text();
@@ -209,7 +237,7 @@ window.notesUtils = {
         });
 
         if (!response.ok) {
-            throw new Error(`GitHub API request failed: ${response.status}`);
+            throw new Error(`读取 GitHub 数据失败：${response.status}`);
         }
 
         return response.json();
@@ -332,7 +360,7 @@ window.notesUtils = {
             .find((line) => line && !line.startsWith("#"));
 
         if (!cleaned) {
-            return "No summary available.";
+            return "暂无摘要。";
         }
 
         return cleaned.length > 120 ? `${cleaned.slice(0, 117)}...` : cleaned;
@@ -340,16 +368,30 @@ window.notesUtils = {
 
     humanize(input) {
         if (!input) {
-            return "General";
+            return "未分类";
         }
 
         if (/[\u4e00-\u9fa5]/.test(input)) {
             return input;
         }
 
-        return input
+        const normalized = String(input).trim().toLowerCase();
+        if (LOCALIZED_LABELS[normalized]) {
+            return LOCALIZED_LABELS[normalized];
+        }
+
+        return String(input)
             .replace(/[-_]+/g, " ")
             .replace(/\b\w/g, (char) => char.toUpperCase());
+    },
+
+    localizeLabel(value) {
+        if (!value) {
+            return value;
+        }
+
+        const normalized = String(value).trim().toLowerCase();
+        return LOCALIZED_LABELS[normalized] || value;
     },
 
     slugify(text) {
@@ -363,7 +405,7 @@ window.notesUtils = {
 
     formatDate(value) {
         if (!value) {
-            return "No date";
+            return "未标注日期";
         }
 
         const date = new Date(value);

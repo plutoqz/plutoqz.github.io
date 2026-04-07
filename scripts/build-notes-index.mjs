@@ -4,6 +4,24 @@ import path from "node:path";
 const repoRoot = process.cwd();
 const notesRoot = path.join(repoRoot, "notes");
 const outputPath = path.join(repoRoot, "notes-manifest.json");
+const localizedLabels = {
+    engineering: "工程实践",
+    webgis: "地图与空间数据",
+    general: "未分类",
+    frontend: "前端",
+    backend: "后端",
+    "geo data": "空间数据",
+    notes: "笔记系统",
+    automation: "自动化",
+    "personal site": "个人站点",
+    "frontend design": "前端设计",
+    "information architecture": "信息架构",
+    map: "地图",
+    utility: "工具",
+    desktop: "桌面应用",
+    "notes folder": "笔记源码目录",
+    repository: "站点仓库"
+};
 
 const notes = await collectNotes(notesRoot);
 notes.sort((a, b) => String(b.date).localeCompare(String(a.date)));
@@ -50,11 +68,11 @@ async function collectNotes(dir) {
         const stats = await fs.stat(absolutePath);
         const parsed = parseFrontMatter(raw);
         const category = parts.length > 1 ? parts[0] : "general";
-        const categoryLabel = String(parsed.attributes.categoryLabel || humanize(category));
+        const categoryLabel = String(localizeLabel(parsed.attributes.categoryLabel || humanize(category)));
         const headings = extractHeadings(parsed.body);
         const title = String(parsed.attributes.title || headings[0]?.text || humanize(fileName));
         const summary = String(parsed.attributes.summary || extractSummary(parsed.body));
-        const tags = normalizeArray(parsed.attributes.tags);
+        const tags = normalizeArray(parsed.attributes.tags).map((tag) => localizeLabel(tag));
         const date = String(parsed.attributes.date || stats.mtime.toISOString().slice(0, 10));
 
         collected.push({
@@ -160,7 +178,7 @@ function extractSummary(body) {
         .find((line) => line && !line.startsWith("#"));
 
     if (!cleaned) {
-        return "No summary available.";
+        return "暂无摘要。";
     }
 
     return cleaned.length > 120 ? `${cleaned.slice(0, 117)}...` : cleaned;
@@ -168,14 +186,28 @@ function extractSummary(body) {
 
 function humanize(input) {
     if (!input) {
-        return "General";
+        return "未分类";
     }
 
     if (/[\u4e00-\u9fa5]/.test(input)) {
         return input;
     }
 
+    const normalized = String(input).trim().toLowerCase();
+    if (localizedLabels[normalized]) {
+        return localizedLabels[normalized];
+    }
+
     return input
         .replace(/[-_]+/g, " ")
         .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function localizeLabel(value) {
+    if (!value) {
+        return value;
+    }
+
+    const normalized = String(value).trim().toLowerCase();
+    return localizedLabels[normalized] || value;
 }

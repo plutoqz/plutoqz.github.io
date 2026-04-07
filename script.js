@@ -1,34 +1,34 @@
 const projects = [
     {
         name: "webgis-frontend",
-        title: "WebGIS Frontend",
-        description: "围绕地图交互与空间数据表达的前端实验，偏重 WebGIS 场景下的可视化与交互组织。",
-        tags: ["Vue", "WebGIS", "Frontend"],
-        meta: "2025",
+        title: "WebGIS 前端实验",
+        description: "围绕地图交互、空间数据表达与专题图层组织展开的前端实践，重点关注复杂 GIS 场景下的可视化与交互结构。",
+        tags: ["Vue", "WebGIS", "前端"],
+        meta: "2025 年",
         url: "https://github.com/plutoqz/webgis-frontend"
     },
     {
         name: "webgis-backend",
-        title: "WebGIS Backend",
-        description: "与前端配套的数据处理与服务能力部分，用来承接地图业务背后的后端逻辑。",
-        tags: ["Python", "Backend", "Geo Data"],
-        meta: "2025",
+        title: "WebGIS 后端能力层",
+        description: "为地图应用提供数据处理与服务支撑，承接空间数据组织、接口能力与业务逻辑协同的后端部分。",
+        tags: ["Python", "后端", "空间数据"],
+        meta: "2025 年",
         url: "https://github.com/plutoqz/webgis-backend"
     },
     {
         name: "image",
-        title: "Image Processing Toolkit",
-        description: "基于 GDAL 与 Qt 的图像处理练习，包含线性拉伸、直方图匹配、SIFT 特征点和形态学操作。",
+        title: "图像处理工具箱",
+        description: "基于 GDAL 与 Qt 的图像处理练习，涵盖线性拉伸、直方图匹配、SIFT 特征点和形态学操作等典型能力。",
         tags: ["C++", "GDAL", "Qt"],
-        meta: "2024",
+        meta: "2024 年",
         url: "https://github.com/plutoqz/image"
     },
     {
         name: "pluto_milkup",
-        title: "Pluto Milkup",
-        description: "一个桌面端 Markdown 编辑器项目，也说明这个主页未来完全可以继续扩展为作品总入口。",
-        tags: ["Desktop", "Markdown", "Utility"],
-        meta: "2025",
+        title: "Pluto Milkup 编辑器",
+        description: "一个桌面端 Markdown 编辑器项目，也说明这个站点未来可以继续扩展成更完整的写作与作品入口。",
+        tags: ["桌面应用", "Markdown", "工具"],
+        meta: "2025 年",
         url: "https://github.com/plutoqz/pluto_milkup"
     }
 ];
@@ -59,7 +59,7 @@ function renderProjects() {
                 <article class="project-card reveal">
                     <header>
                         <div>
-                            <p class="panel-kicker">${project.name}</p>
+                            <p class="panel-kicker">项目记录 / ${project.name}</p>
                             <h3>${project.title}</h3>
                         </div>
                         <div class="project-meta">
@@ -70,7 +70,7 @@ function renderProjects() {
                     <div class="project-tags">
                         ${project.tags.map((tag) => `<span>${tag}</span>`).join("")}
                     </div>
-                    <a class="project-link" href="${project.url}" target="_blank" rel="noreferrer">Open Repository</a>
+                    <a class="project-link" href="${project.url}" target="_blank" rel="noreferrer">查看仓库</a>
                 </article>
             `
         )
@@ -80,6 +80,11 @@ function renderProjects() {
 }
 
 async function loadLatestNotes() {
+    if (!window.notesUtils) {
+        renderNotesUnavailable("笔记工具脚本未成功载入。");
+        return;
+    }
+
     try {
         const manifest = await window.notesUtils.loadNotesIndex();
         const notes = Array.isArray(manifest.notes) ? manifest.notes : [];
@@ -90,7 +95,7 @@ async function loadLatestNotes() {
         }
 
         if (notesCategories) {
-            notesCategories.textContent = `${categories.length} 个分类`;
+            notesCategories.textContent = `${categories.length} 个专题`;
         }
 
         if (notesCategoryPreview) {
@@ -107,9 +112,9 @@ async function loadLatestNotes() {
         if (notes.length === 0) {
             latestNotes.innerHTML = `
                 <article class="note-preview-card note-preview-empty reveal">
-                    <p class="panel-kicker">No Notes Yet</p>
-                    <h3>还没有公开笔记</h3>
-                    <p>把 Markdown 文件放进 notes 目录后，这里会自动显示最新笔记预览。</p>
+                    <p class="panel-kicker">暂无文章</p>
+                    <h3>还没有公开的学习笔记</h3>
+                    <p>把 Markdown 文件放进 notes 目录后，这里会自动出现最新的文章预览。</p>
                 </article>
             `;
             revealOnScroll();
@@ -117,13 +122,13 @@ async function loadLatestNotes() {
         }
 
         latestNotes.innerHTML = notes
-            .slice(0, 4)
+            .slice(0, 3)
             .map(
-                (note) => `
+                (note, index) => `
                     <article class="note-preview-card reveal">
                         <header>
                             <div>
-                                <p class="panel-kicker">${note.categoryLabel}</p>
+                                <p class="panel-kicker">最新文章 ${index + 1} / ${note.categoryLabel}</p>
                                 <h3>${escapeHtml(note.title)}</h3>
                             </div>
                             <div class="note-meta">
@@ -132,9 +137,9 @@ async function loadLatestNotes() {
                         </header>
                         <p>${escapeHtml(note.summary)}</p>
                         <div class="note-meta">
-                            ${note.tags.slice(0, 3).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}
+                            ${(note.tags || []).slice(0, 3).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}
                         </div>
-                        <a class="note-link" href="${note.url}">阅读笔记</a>
+                        <a class="note-link" href="${note.url}">阅读文章</a>
                     </article>
                 `
             )
@@ -142,17 +147,23 @@ async function loadLatestNotes() {
 
         revealOnScroll();
     } catch (error) {
-        if (latestNotes) {
-            latestNotes.innerHTML = `
-                <article class="note-preview-card note-preview-empty reveal">
-                    <p class="panel-kicker">Notes Unavailable</p>
-                    <h3>学习笔记预览暂时不可用</h3>
-                    <p>${escapeHtml(error.message)}</p>
-                </article>
-            `;
-            revealOnScroll();
-        }
+        renderNotesUnavailable(error.message);
     }
+}
+
+function renderNotesUnavailable(message) {
+    if (!latestNotes) {
+        return;
+    }
+
+    latestNotes.innerHTML = `
+        <article class="note-preview-card note-preview-empty reveal">
+            <p class="panel-kicker">暂时不可用</p>
+            <h3>文章预览未能载入</h3>
+            <p>${escapeHtml(message)}</p>
+        </article>
+    `;
+    revealOnScroll();
 }
 
 function revealOnScroll() {
@@ -180,7 +191,7 @@ function revealOnScroll() {
 
 function formatDate(value) {
     if (!value) {
-        return "No date";
+        return "未标注日期";
     }
 
     const date = new Date(value);
