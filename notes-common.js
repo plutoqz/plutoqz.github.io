@@ -6,13 +6,14 @@ const NOTES_REPO = {
 };
 
 const LOCALIZED_LABELS = {
-    engineering: "工程实践",
-    webgis: "地图与空间数据",
+    agent: "智能体",
+    "八股": "计算机基础",
+    "研究方向": "研究方向",
     general: "未分类",
     frontend: "前端",
     backend: "后端",
     "geo data": "空间数据",
-    notes: "笔记系统",
+    notes: "文章归档",
     automation: "自动化",
     "personal site": "个人站点",
     "frontend design": "前端设计",

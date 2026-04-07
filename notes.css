@@ -175,13 +175,13 @@ p {
 }
 
 .notes-hero h1 {
-    font-size: clamp(2.8rem, 4.8vw, 4.6rem);
-    max-width: 8ch;
+    font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+    max-width: none;
 }
 
 .note-meta-band h1 {
-    font-size: clamp(2.4rem, 4vw, 4rem);
-    max-width: 12ch;
+    font-size: clamp(1.9rem, 3vw, 2.9rem);
+    max-width: none;
 }
 
 .notes-hero p,
@@ -240,8 +240,8 @@ p {
     display: block;
     margin: 10px 0 10px;
     font-family: "Cormorant Garamond", "Noto Serif SC", serif;
-    font-size: 1.9rem;
-    line-height: 1;
+    font-size: clamp(1.2rem, 1.8vw, 1.65rem);
+    line-height: 1.14;
     overflow-wrap: anywhere;
 }
 
@@ -583,7 +583,7 @@ p {
 
     .notes-hero h1,
     .note-meta-band h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .notes-list-head,

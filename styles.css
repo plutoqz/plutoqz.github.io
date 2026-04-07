@@ -237,12 +237,12 @@ code {
 }
 
 .hero-copy h1 {
-    max-width: 10ch;
+    max-width: 12ch;
     font-family: "Cormorant Garamond", "Noto Serif SC", serif;
-    font-size: clamp(3rem, 5.2vw, 5rem);
+    font-size: clamp(2.5rem, 4.2vw, 4rem);
     font-weight: 700;
-    line-height: 0.98;
-    letter-spacing: -0.02em;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
     overflow-wrap: anywhere;
 }
 
@@ -353,8 +353,8 @@ p {
     display: block;
     margin: 10px 0 8px;
     font-family: "Cormorant Garamond", "Noto Serif SC", serif;
-    font-size: 1.8rem;
-    line-height: 1;
+    font-size: clamp(1.28rem, 2vw, 1.7rem);
+    line-height: 1.12;
     overflow-wrap: anywhere;
 }
 
@@ -439,7 +439,7 @@ p {
 .section-heading h2,
 .footer h2 {
     max-width: 15ch;
-    font-size: clamp(2rem, 3vw, 3.1rem);
+    font-size: clamp(1.8rem, 2.6vw, 2.8rem);
     line-height: 1.14;
     overflow-wrap: anywhere;
 }
@@ -629,7 +629,8 @@ p {
     }
 
     .hero-copy h1 {
-        font-size: clamp(2.7rem, 12vw, 4rem);
+        max-width: none;
+        font-size: clamp(2.1rem, 10vw, 3.1rem);
     }
 
     .section-heading h2,
